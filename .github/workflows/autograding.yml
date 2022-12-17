@@ -34,7 +34,7 @@ jobs:
     name: Build Badges
     runs-on: ubuntu-latest
     if: always()
-    needs: build
+    needs: autograding
     steps:
       # need to checkout whole repo
       - uses: actions/checkout@v3
