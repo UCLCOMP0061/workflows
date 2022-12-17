@@ -52,7 +52,7 @@ jobs:
       - name: make points bar
         uses: markpatterson27/points-bar@v1
         with:
-          points: ${{ needs.build.outputs.grading-score }}
+          points: ${{ needs.autograding.outputs.grading-score }}
           path: '.github/badges/points-bar.svg'
           font-color: 'black'
 
