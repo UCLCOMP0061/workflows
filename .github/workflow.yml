@@ -1,0 +1,70 @@
+name: Autograding
+
+on:
+  workflow_call:
+    inputs:
+      lab:
+        required: true
+        type: number
+jobs:
+  autograding:
+    name: Autograding
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+           repository: UCLCS0061/Lab01-template
+           path: .template
+      - name: Copy template test file
+        run: cp .template/lab0${{ inputs.lab }}_test.py ./
+      - name: Copy template classroom file
+        run: cp .template/.github/classroom/autograding.json .github/classroom/autograding.json
+      - name: Delete template
+        run: rm -rf template/
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: install dependencies
+        run: pip3 install -r requirements.txt
+      - uses: UCLCOMP0061/autograding@v1
+        id: autograder
+
+    outputs:
+      grading-score: ${{ steps.autograder.outputs.Points }}
+  # job to build custom status badges
+  build-badges:
+    name: Build Badges
+    runs-on: ubuntu-latest
+    if: always()
+    needs: build
+    steps:
+      # need to checkout whole repo
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # switch to badges branch
+      - run: git checkout badges || git checkout -b badges
+
+      # make dir for badges
+      - name: make badges dir
+        run: mkdir -p .github/badges
+
+      # create points bar
+      - name: make points bar
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ needs.build.outputs.grading-score }}
+          path: '.github/badges/points-bar.svg'
+          font-color: 'black'
+
+      # commit and push badge if score has changed
+      - name: Commit and push badge
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add '.github/badges'
+          git commit -m "Add/Update badge" || exit 0
+          git push origin badges
