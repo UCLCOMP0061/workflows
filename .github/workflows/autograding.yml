@@ -29,6 +29,8 @@ jobs:
         run: pip3 install -r requirements.txt
       - uses: UCLCOMP0061/autograding@v1
         id: autograder
+        with:
+          step-summary: false
 
     outputs:
       grading-score: ${{ steps.autograder.outputs.Points }}
