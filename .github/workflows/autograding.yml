@@ -17,7 +17,7 @@ jobs:
           python-version: '3.11' 
       - uses: actions/checkout@v3
         with:
-          repository: UCLCS0061/Lab0${{ inputs.lab }}-template
+          repository: UCLCOMP0061/Lab0${{ inputs.lab }}-template
           path: .template
       - name: Copy template test file
         run: cp .template/lab0${{ inputs.lab }}_test.py ./
