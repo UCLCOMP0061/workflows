@@ -5,7 +5,7 @@ on:
     inputs:
       lab:
         required: true
-        type: number
+        type: string
 jobs:
   autograding:
     name: Autograding
@@ -17,10 +17,10 @@ jobs:
           python-version: '3.12'
       - uses: actions/checkout@v4
         with:
-          repository: UCLCOMP0061/Lab0${{ inputs.lab }}-template
+          repository: UCLCOMP0061/lab-${{ inputs.lab }}
           path: .template
       - name: Copy template test file
-        run: cp .template/lab0${{ inputs.lab }}_test.py ./
+        run: cp .template/lab_${{ inputs.lab }}_test.py ./
       - name: Copy template classroom file
         run: cp .template/.github/classroom/autograding.json .github/classroom/autograding.json
       - name: Delete template

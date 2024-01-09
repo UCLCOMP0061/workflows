@@ -2,12 +2,12 @@
 
 The marking workflow run by all labs is found in [./.github/workflows/autograding.yml](./.github/workflows/autograding.yml).
 
-The workflow takes one argument, `lab`, which is the number of the lab to mark. For example, to mark lab 1:
+The workflow takes one argument, `lab`, which is the name of the lab to mark. For example, to mark the `psi` lab, the workflow is called as follows:
 ```jobs:
   autograding:
     uses: UCLCOMP0061/workflows/.github/workflows/autograding.yml@main
     with:
-      lab: 1
+      lab: psi
 ```
 
 The workflow is triggered when a student pushes to the `main` branch of their repo and works as follows:
