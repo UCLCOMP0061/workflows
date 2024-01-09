@@ -15,16 +15,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - uses: actions/checkout@v4
-        with:
-          repository: UCLCOMP0061/lab-${{ inputs.lab }}
-          path: .template
-      - name: Copy template test file
-        run: cp .template/lab_${{ inputs.lab }}_test.py ./
-      - name: Copy template classroom file
-        run: cp .template/.github/classroom/autograding.json .github/classroom/autograding.json
-      - name: Delete template
-        run: rm -rf template/
       - name: install dependencies
         run: pip3 install -r requirements.txt
       - uses: UCLCOMP0061/autograding@v1
